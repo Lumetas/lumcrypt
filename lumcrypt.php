@@ -69,6 +69,7 @@ $arr = explode("-", $str);
 foreach ($arr as &$elem){
 $elem = -1 * (float)$elem;
 $elem = $elem * $key;
+$elem = round($elem);
 
 }
 
