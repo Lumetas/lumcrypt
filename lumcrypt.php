@@ -1,7 +1,7 @@
 <?php
 class LumCrypt{
 public function encrypt($str, $key){
-$str = urlencode($str);
+$str = base64_encode($str);
 $str = $this->s2b($str);
 $str = $this->cAB($str, $key);
 $str = $this->bukvaizer($str);
@@ -12,7 +12,7 @@ public function decrypt($str, $key){
 $str = $this->unbukvaizer($str);
 $str = $this->unCAB($str, $key);
 $str = $this->b2s($str);
-$str = urldecode($str);
+$str = base64_decode($str);
 return $str;
 
 
@@ -40,6 +40,12 @@ private function b2s($binary){
 }
 private function cAB($str, $key){
 $key = explode(' ', $this->s2b($key));
+$i = 0;
+foreach ($key as &$v){
+    $v = (int)$v * ($i * 2);
+    $i += 1;
+
+}
 $key = array_sum($key) / count($key); $key = $key * 1; $key = (int)"-$key";
 echo "Ключ в пхп: $key <br>";
 $arr = explode(" ", $str);
@@ -62,6 +68,12 @@ return implode('',$arr);
 private function unCAB($str, $key){
 $key = explode(' ', $this->s2b($key));
 
+$i = 0;
+foreach ($key as &$v){
+    $v = (int)$v * ($i * 2);
+    $i += 1;
+
+}
 
 $key = array_sum($key) / count($key); $key = $key * 1; $key = (int)"-$key";
 //echo "$key <br>";
