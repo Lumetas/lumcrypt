@@ -47,7 +47,6 @@ foreach ($key as &$v){
 
 }
 $key = array_sum($key) / count($key); $key = $key * 1; $key = (int)"-$key";
-echo "Ключ в пхп: $key <br>";
 $arr = explode(" ", $str);
 foreach ($arr as &$elem){
 $elem = (int)$elem;

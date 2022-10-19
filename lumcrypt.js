@@ -3,13 +3,25 @@ lumCrypt.decrypt = function(str, key){
 		str = unbukvaizer(str);
 		str = unCAB(str, key);
 	str = b2s(str);
-	console.log(str);
+
 	str = Base64.decode(str);
-		return(str);
+	return(str);
+}
 
+	lumCrypt.encrypt = function(str, key){
+
+str = Base64.encode(str);
+		str = s2b(str);
+	
+		str = CAB(str, key);
+
+		str = bukvaizer(str);
+	
+		return(str)
 	}
+	
 
-	function unCAB (str, key){
+	function unCAB (str, key) {
 	key = s2b(key);
 		key = key.split(' ');
 		key.forEach(function(item, i, arr) {
@@ -25,7 +37,7 @@ lumCrypt.decrypt = function(str, key){
 	key = '-' + key
 		key = key.slice(0, 7);
     key = Number(key)
-	console.log('ключ в жс: ' + key)
+
 	let arr = str.split('-');
     
 
@@ -39,6 +51,43 @@ arr.forEach(function(item, i, arr) {
 	arr.splice(arr.indexOf(0), 1);
 	return(arr.join(' '));
 	}
+
+function CAB(str, key) {
+	key = s2b(key);
+		key = key.split(' ');
+		key.forEach(function(item, i, arr) {
+			arr[i] = item * (i * 2);
+});
+	let keyCount = key.length;
+	key = key.reduce(function(sum, elem) {
+	return sum + Number(elem);
+	}, 0);
+	//keyCount = keyCount + 1;
+	key = key / keyCount;
+	key = String(key).replace('.', '');
+	key = '-' + key
+		key = key.slice(0, 7);
+    key = Number(key)
+
+
+	let arr = str.split(' ');
+	
+arr.forEach(function(item, i, arr) {
+	item = 1 * Number(item);
+	item = item / key;
+	arr[i] =item;
+});
+
+
+return(arr.join(''));
+
+}
+
+
+
+
+
+
 	function bukvaizer (str){
     let en = ['a','f','h','j','w','t','l','k','v','n','z','.'];
     let ru = ['-','1','2','3','4','5','6','7','8','9','0','.'];
